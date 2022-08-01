@@ -1,0 +1,32 @@
+{
+  "name": "songplits",
+  "version": "1.0.0",
+  "description": "WebApp to split songs using Deezer's Spleeter system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PromisePending/Songplits.git"
+  },
+  "keywords": [
+    "Song",
+    "Split",
+    "SongSplit",
+    "Spleeter",
+    "WebApp",
+    "Web"
+  ],
+  "author": "Space_Interprise, LoboMetalurgico",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PromisePending/Songplits/issues"
+  },
+  "homepage": "https://github.com/PromisePending/Songplits#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "ws": "^8.8.1"
+  }
+}
