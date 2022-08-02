@@ -22,7 +22,7 @@ class Client {
     // reads the pages folder inside the frontend folder and maps each folder to a route using a lookup table.
     const pages = fs.readdirSync(path.join(__dirname, './frontend/pages'));
     pages.forEach(page => {
-      const pageRoute = this.pageLookup[page] ?? `/${page}`;
+      const pageRoute = this.pageLookup[page] ? this.pageLookup[page] : `/${page}`;
       this.app.use(pageRoute, express.static(path.join(__dirname, `./frontend/pages/${page}`)));
     });
 
