@@ -12,6 +12,8 @@
   --green-buttom-gradient: linear-gradient(-45deg, rgba(8,149,88,1) 0%, rgba(35,255,175,1) 50%, rgba(83,0,164,1) 100%);
   --page-title-gradient-effect: -webkit-linear-gradient(135deg, rgba(76,8,149,1) 0%, rgba(255,153,19,1) 100%);
   --page-subtitle-gradient-effect: -webkit-linear-gradient(135deg, rgb(158, 83, 238) 0%, rgba(255,153,19,1) 100%);
+
+  --dashed-animated-border: #fff;
 }
 
 * {
@@ -37,7 +39,7 @@ html, body {
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
-    justify-content: center;
+    justify-items: center;
     align-items: center;
     gap: 0.25rem;
     padding: 0.25rem;
@@ -68,6 +70,19 @@ html, body {
     position: fixed;
     z-index: 9999;
     background-color: var(--popup-semisolid-background-color);
+    backdrop-filter: blur(0.5rem);
+    border: 0.2rem solid var(--border-light-color-1);
+    transition: all 0.5s ease-out;
+    margin-top: 0%;
+}
+
+.blocks.popup.big {
+  width: 75%;
+  height: 75%;
+}
+
+.blocks.popup.hide {
+  margin-top: 200%;
 }
 
 #LandingScreen {
@@ -229,19 +244,48 @@ span.gradientSubTitle {
   margin: 0;
 }
 
+#fileInput {
+  width: 98%;
+  height: 98%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+  text-align: center;
+  cursor: pointer;
+}
+
+.box { background-image: repeating-linear-gradient(0deg, var(--dashed-animated-border), var(--dashed-animated-border) 11.9px, transparent 14px, transparent 39.5px, var(--dashed-animated-border) 44px), repeating-linear-gradient(90deg, var(--dashed-animated-border), var(--dashed-animated-border) 11.9px, transparent 14px, transparent 39.5px, var(--dashed-animated-border) 44px), repeating-linear-gradient(180deg, var(--dashed-animated-border), var(--dashed-animated-border) 11.9px, transparent 14px, transparent 39.5px, var(--dashed-animated-border) 44px), repeating-linear-gradient(270deg, var(--dashed-animated-border), var(--dashed-animated-border) 11.9px, transparent 14px, transparent 39.5px, var(--dashed-animated-border) 44px); background-size: 7px calc(100% + 44px), calc(100% + 44px) 7px, 7px calc(100% + 44px) , calc(100% + 44px) 7px; background-position: 0 0, 0 0, 100% 0, 0 100%; background-repeat: no-repeat; animation: borderAnimation 0.7s infinite linear; }
+
+@keyframes borderAnimation { from { background-position: 0 0, -44px 0, 100% -44px, 0 100%; } to { background-position: 0 -44px, 0 0, 100% 0, -44px 100%; } } 
+
+#fileInputElement {
+  display: none;
+}
+
+#fileInputLabel {
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: calc(var(--border-radius-amount) * 1rem);
+  cursor: pointer;
+}
+
 @media only screen and (orientation: portrait) {
   #LandingScreen-Front {
       grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
       grid-template-columns: 1fr;
   }
 
-  .big {
+  button.big {
     min-width: 50%;
     min-height: 10%;
     font-size: 5rem;
   }
 
-  .big:active {
+  button.big:active {
     min-width: 55%;
     min-height: 13%;
     font-size: 6rem;
