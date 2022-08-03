@@ -11,7 +11,7 @@
   --main-app-background-color: linear-gradient(45deg, #31054b 0%, #3d0a3a 100%);
   --green-buttom-gradient: linear-gradient(-45deg, rgba(8,149,88,1) 0%, rgba(35,255,175,1) 50%, rgba(83,0,164,1) 100%);
   --page-title-gradient-effect: -webkit-linear-gradient(135deg, rgba(76,8,149,1) 0%, rgba(255,153,19,1) 100%);
-  --page-subtitle-gradient-effect: -webkit-linear-gradient(135deg, rgb(110, 33, 194) 0%, rgba(255,153,19,1) 100%);
+  --page-subtitle-gradient-effect: -webkit-linear-gradient(135deg, rgb(158, 83, 238) 0%, rgba(255,153,19,1) 100%);
 }
 
 * {
@@ -32,8 +32,8 @@ html, body {
 }
 
 #app {
-    width: calc(100% - 0.5rem);
-    height: calc(100% - 0.5rem);
+    width: 100%;
+    height: 100%;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
@@ -77,7 +77,7 @@ html, body {
     align-items: center; */
     width: 100%;
     height: 100%;
-    border: 0.2rem solid var(--border-light-color-1);
+    /* border: 0.2rem solid var(--border-light-color-1); */
     border-radius: calc(var(--border-radius-amount) * 1rem);
     overflow: hidden;
 }
@@ -142,34 +142,73 @@ html, body {
     justify-content: center;
 }
 
-button.big {
+.big {
     min-width: 15%;
     min-height: 10%;
     width: max-content;
     height: max-content;
     font-size: 2rem;
+}
+
+.big:active {
+  min-width: 15.25%;
+  min-height: 10.25%;
+}
+
+#startSplitProcess {
+    width: 100%;
+    height: 100%;
+    font-size: 2rem;
+    border-radius: calc(var(--border-radius-amount) * 1rem);
+    transform: translateY(-100%);
     cursor: pointer;
 }
 
-button.green {
+#startSplitProcess-Shadow {
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--border-radius-amount) * 1rem);
+  filter: blur(2rem);
+}
+
+#startSplitProcess-button:hover #startSplitProcess {
+  background-position-x: 100%;
+}
+
+#startSplitProcess-button:hover #startSplitProcess-Shadow {
+  background-position-x: 100%;
+}
+
+#startSplitProcess-button {
+  transition: all 0.1s ease-in-out;
+}
+
+#startSplitProcess-button:active {
+  font-size: 2.5rem !important;
+}
+
+#startSplitProcess-button:active #startSplitProcess-Shadow {
+  filter: blur(1rem);
+}
+
+.green {
     background: var(--green-buttom-gradient);
     border: 0;
-    border-radius: calc(var(--border-radius-amount) * 1rem);
     background-size: 200% 100%;
     background-position-x: 0%;
     transition: all 0.3s ease;
     color: var(--main-text-color);
 }
 
-button.green:hover {
+.green:hover {
     background-position-x: 100%;
 }
 
-button.green:active {
+.green:active {
     filter: saturate(1.5)
 }
 
-button.spaced {
+.spaced {
     margin: 5rem;
 }
 
@@ -191,8 +230,28 @@ span.gradientSubTitle {
 }
 
 @media only screen and (orientation: portrait) {
-    #LandingScreen-Front {
-        grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
-        grid-template-columns: 1fr;
-    }
+  #LandingScreen-Front {
+      grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
+      grid-template-columns: 1fr;
+  }
+
+  .big {
+    min-width: 50%;
+    min-height: 10%;
+    font-size: 5rem;
+  }
+
+  .big:active {
+    min-width: 55%;
+    min-height: 13%;
+    font-size: 6rem;
+  }
+
+  #startSplitProcess {
+    transform: translateY(-120%);
+  }
+
+  #startSplitProcess:active {
+    transform: translateY(-100%);
+  }
 }
