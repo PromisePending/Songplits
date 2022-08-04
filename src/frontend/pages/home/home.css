@@ -14,6 +14,7 @@
   --page-subtitle-gradient-effect: -webkit-linear-gradient(135deg, rgb(158, 83, 238) 0%, rgba(255,153,19,1) 100%);
 
   --dashed-animated-border: #fff;
+  --popup-close-background-color: #16002289;
 }
 
 * {
@@ -65,23 +66,56 @@ html, body {
 }
 
 .blocks.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--popup-close-background-color);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0rem;
+  border-radius: 0;
+  border: 0;
+  cursor: default;
+  backdrop-filter: blur(1px);
+  transition: all 0.3s ease-out;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.blocks.popup .content {
     width: 50%;
     height: 50%;
-    position: fixed;
-    z-index: 9999;
     background-color: var(--popup-semisolid-background-color);
     backdrop-filter: blur(0.5rem);
     border: 0.2rem solid var(--border-light-color-1);
-    transition: all 0.5s ease-out;
+    transition: all 1s cubic-bezier(.19,1,.22,1);
     margin-top: 0%;
+    border-radius: calc(var(--border-radius-amount) * 1rem);
+    overflow: hidden;
+    padding: 0.5rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-.blocks.popup.big {
+.blocks.popup.big .content {
   width: 75%;
   height: 75%;
 }
 
 .blocks.popup.hide {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.blocks.popup.hide .content {
   margin-top: 200%;
 }
 
@@ -230,12 +264,14 @@ html, body {
 span.gradientText {
   background: var(--page-title-gradient-effect);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 span.gradientSubTitle {
   background: var(--page-subtitle-gradient-effect);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -271,6 +307,14 @@ span.gradientSubTitle {
   padding: 1rem;
   border-radius: calc(var(--border-radius-amount) * 1rem);
   cursor: pointer;
+}
+
+#fileInput h2 {
+  font-size: 1.5rem;
+}
+
+#fileInput h1 {
+  margin: 0;
 }
 
 @media only screen and (orientation: portrait) {
