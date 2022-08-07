@@ -10,11 +10,16 @@
   --main-app-background-overlay-color: #0a000faa;
   --main-app-background-color: linear-gradient(45deg, #31054b 0%, #3d0a3a 100%);
   --green-buttom-gradient: linear-gradient(-45deg, rgba(8,149,88,1) 0%, rgba(35,255,175,1) 50%, rgba(83,0,164,1) 100%);
-  --page-title-gradient-effect: -webkit-linear-gradient(135deg, rgba(76,8,149,1) 0%, rgba(255,153,19,1) 100%);
+  --purple-button-gradient: linear-gradient(145deg, rgba(49,5,75,1) 0%, rgba(218,70,255,1) 50%, rgba(0,149,80,1) 100%);
+  --page-title-gradient-effect: -webkit-linear-gradient(135deg, rgba(76,8,149,1) 0%, #ff9913 100%);
   --page-subtitle-gradient-effect: -webkit-linear-gradient(135deg, rgb(158, 83, 238) 0%, rgba(255,153,19,1) 100%);
 
   --dashed-animated-border: #fff;
+  --dashed-animated-border-dragging: #ff9913;
   --popup-close-background-color: #16002289;
+
+  --orange-gradient-background-color-1: #ff6f36c6;
+  --orange-gradient-background-color-2: #a42eff3d;
 }
 
 * {
@@ -240,23 +245,6 @@ html, body {
   filter: blur(1rem);
 }
 
-.green {
-    background: var(--green-buttom-gradient);
-    border: 0;
-    background-size: 200% 100%;
-    background-position-x: 0%;
-    transition: all 0.3s ease;
-    color: var(--main-text-color);
-}
-
-.green:hover {
-    background-position-x: 100%;
-}
-
-.green:active {
-    filter: saturate(1.5)
-}
-
 .spaced {
     margin: 5rem;
 }
@@ -289,6 +277,8 @@ span.gradientSubTitle {
   align-self: center;
   text-align: center;
   cursor: pointer;
+  transition: all 0.5s ease;
+  scale: 0;
 }
 
 .box { background-image: repeating-linear-gradient(0deg, var(--dashed-animated-border), var(--dashed-animated-border) 11.9px, transparent 14px, transparent 39.5px, var(--dashed-animated-border) 44px), repeating-linear-gradient(90deg, var(--dashed-animated-border), var(--dashed-animated-border) 11.9px, transparent 14px, transparent 39.5px, var(--dashed-animated-border) 44px), repeating-linear-gradient(180deg, var(--dashed-animated-border), var(--dashed-animated-border) 11.9px, transparent 14px, transparent 39.5px, var(--dashed-animated-border) 44px), repeating-linear-gradient(270deg, var(--dashed-animated-border), var(--dashed-animated-border) 11.9px, transparent 14px, transparent 39.5px, var(--dashed-animated-border) 44px); background-size: 7px calc(100% + 44px), calc(100% + 44px) 7px, 7px calc(100% + 44px) , calc(100% + 44px) 7px; background-position: 0 0, 0 0, 100% 0, 0 100%; background-repeat: no-repeat; animation: borderAnimation 0.7s infinite linear; }
@@ -317,6 +307,211 @@ span.gradientSubTitle {
   margin: 0;
 }
 
+.forceHide {
+  margin-top: 500% !important;
+  height: 0 !important;
+  position: fixed !important;
+}
+
+.disabled {
+  display: none !important;
+}
+
+#FileSelection {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-radius: calc(var(--border-radius-amount) * 1rem);
+  transition: all 0.5s ease;
+}
+
+#FileSelection-SelectedFile {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  border-radius: calc(var(--border-radius-amount) * 1rem);
+  transition: all 0.5s ease;
+  gap: 1rem;
+  width: 100%;
+}
+
+#FileSelection-SelectedFile-Info {
+  align-self: baseline;
+}
+
+#FileSelection-SelectedFile-Preview {
+  width: 50%;
+  height: 100%;
+}
+
+#FileSelection-SelectedFile-Preview-Image-Image {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: calc(var(--border-radius-amount) * 1rem);
+}
+
+#FileSelection-SelectedFile-Info-Title {
+  width: 100%;
+  font-size: calc(1.5rem + 0.5vw);
+  margin: 0;
+}
+
+#FileSelection-SelectedFile-Info-Artist {
+  font-size: calc(1rem + 0.5vw);
+  margin: 0;
+  font-weight: normal;
+}
+
+#FileSelection-Buttons {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem;
+  border-radius: calc(var(--border-radius-amount) * 1rem);
+  transition: all 0.5s ease;
+  gap: 2rem;
+}
+
+#FileSelection-Buttons button {
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--border-radius-amount) * 1rem);
+  transition: all 0.5s ease;
+  border: 0;
+  background: var(--purple-button-gradient);
+  background-size: 200% 100%;
+  background-position-x: 0%;
+  font-size: 2rem;
+  color: var(--main-text-color);
+  cursor: pointer;
+}
+
+#FileSelection-Buttons button:hover {
+  background-position-x: 100%;
+}
+
+#FileSelection-Buttons button:active {
+  filter: saturate(1.5)
+}
+
+.green {
+  background: var(--green-buttom-gradient) !important;
+  border: 0 !important;
+  background-size: 200% 100% !important;
+  background-position-x: 0% !important;
+  transition: all 0.3s ease !important;
+  color: var(--main-text-color) !important;
+}
+
+.green:hover {
+  background-position-x: 100% !important;
+}
+
+.green:active {
+  filter: saturate(1.5) !important;
+}
+
+.dragging {
+  --dashed-animated-border: var(--dashed-animated-border-dragging);
+}
+
+#serverConnection-screen {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-radius: calc(var(--border-radius-amount) * 1rem);
+  transition: all 0.5s ease;
+  background: linear-gradient(145deg, var(--orange-gradient-background-color-1) 0%, var(--orange-gradient-background-color-2) 100%);
+  animation: orangeGradientBackgroundSteppedAnimation 5s infinite ease;
+  background-size: 200%;
+}
+
+@keyframes orangeGradientBackgroundSteppedAnimation {
+  0% {
+    background-position-x: 0%;
+  }
+  50% {
+    background-position-x: 100%;
+  }
+  100% {
+    background-position-x: 0%;
+  }
+}
+
+#serverConnection-screen-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: calc(var(--border-radius-amount) * 1rem);
+  transition: all 0.5s ease;
+  gap: 1rem;
+}
+
+#serverConnection-screen-content-title {
+  width: 100%;
+  font-size: calc(1.5rem + 2vw);
+  margin: 0;
+  text-align: center;
+}
+
+#serverConnection-screen-content-progress {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  border-radius: calc(var(--border-radius-amount) * 1rem);
+  transition: all 0.5s ease;
+  gap: 0.5rem;
+}
+
+#serverConnection-screen-content-progress-text {
+  width: 100%;
+  font-size: calc(1.5rem + 1vw);
+  margin: 0;
+  text-align: center;
+}
+
+#serverConnection-screen-content-canvas {
+  border-radius: calc(var(--border-radius-amount) * 1rem);
+  transition: all 0.5s ease;
+  object-fit: contain;
+  width: 50%;
+  height: 50%;
+  animation: rotateAnimation 2s infinite linear;
+}
+
+@keyframes rotateAnimation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @media only screen and (orientation: portrait) {
   #LandingScreen-Front {
       grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
@@ -341,5 +536,14 @@ span.gradientSubTitle {
 
   #startSplitProcess:active {
     transform: translateY(-100%);
+  }
+
+  #FileSelection-SelectedFile {
+    flex-direction: column;
+  }
+
+  #FileSelection-SelectedFile-Preview {
+    width: 100%;
+    height: 100%;
   }
 }

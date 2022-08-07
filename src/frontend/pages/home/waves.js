@@ -91,6 +91,3 @@ function generateLandingPageBGWaves() {
         stopUpdatingSize,
     };
 }
-
-const waveManager = generateLandingPageBGWaves();
-waveManager.startAnimating();

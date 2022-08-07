@@ -27,7 +27,7 @@ class Client {
     });
 
     // serves the static assets.
-    this.app.use(express.static('./frontend/assets'));
+    this.app.use('/assets/', express.static(path.join(__dirname, './frontend/assets/')));
   }
 
   /**
