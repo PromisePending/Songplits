@@ -1,6 +1,8 @@
 const waveManager = generateLandingPageBGWaves();
 waveManager.startAnimating();
 
+const serverConnection = new ServerConnection();
+
 document.getElementById('startSplitProcess').onclick = () => {
     showFileInput();
 }
@@ -154,3 +156,9 @@ function switchFromFileReviewToFileUpload() {
   document.getElementById('serverConnection-screen').classList.remove('disabled');
 }
 document.getElementById('FileSelection-Buttons-SplitSong').onclick = switchFromFileReviewToFileUpload;
+
+serverConnection.on('serverConnectionMessage', (detail) => {
+  if (detail === 'connected') {
+    switchFromFileReviewToFileUpload();
+  }
+});
