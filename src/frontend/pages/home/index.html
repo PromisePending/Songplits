@@ -1,79 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>SongPlits</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="./home.css">
-        <meta name="description" content="SongPlits is a web application that allows you to split songs instruments apart.">
-        <meta name="application-name" content="SongPlits">
-        <meta name="author" content="PromisePending">
-        <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
-        <script defer src="./serverConnection.js"></script>
-        <script defer src="./waves.js"></script>
-        <script defer src="./spinning.js"></script>
-        <script defer src="./home.js"></script>
-    </head>
-    <body>
-        <div id="app">
-            <div class="blocks fullscreen">
-                <div id="LandingScreen">
-                    <div id="LandingScreen-Background">
-                        <div id="LS-BSolid"></div>
-                        <canvas id="LS-BWave1"></canvas>
-                        <canvas id="LS-BWave2"></canvas>
-                        <div id="LS-BOverlay"></div>
-                    </div>
-                    <div id="LandingScreen-Front">
-                        <div class="pageArea">
-                            <h1 id="siteTitle">Song<span class="gradientText">Plits</span></h1>
-                            <h3 id="subSitetitle">Separate your <span class="gradientSubTitle">favorite songs</span> with a single click</h3>
-                            <div id="startSplitProcess-button" class="big spaced">
-                                <div id="startSplitProcess-Shadow" class="green"></div>
-                                <button id="startSplitProcess" class="green">Split Song!</button>
-                            </div>
-                        </div>
-                    </div>
+  <head>
+    <title>SongPlits</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./home.css">
+    <meta name="description" content="SongPlits is a web application that allows you to split songs instruments apart.">
+    <meta name="application-name" content="SongPlits">
+    <meta name="author" content="PromisePending">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jsmediatags/3.9.5/jsmediatags.min.js"></script>
+    <script defer src="./serverConnection.js"></script>
+    <script defer src="./commands.js"></script>
+    <script defer src="./waves.js"></script>
+    <script defer src="./spinning.js"></script>
+    <script defer src="./home.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="blocks fullscreen">
+        <div id="LandingScreen">
+          <div id="LandingScreen-Background">
+            <div id="LS-BSolid"></div>
+            <canvas id="LS-BWave1"></canvas>
+            <canvas id="LS-BWave2"></canvas>
+            <div id="LS-BOverlay"></div>
+          </div>
+          <div id="LandingScreen-Front">
+            <div class="pageArea">
+              <h1 id="siteTitle">Song<span class="gradientText">Plits</span></h1>
+              <h3 id="subSitetitle">Separate your <span class="gradientSubTitle">favorite songs</span> with a single click</h3>
+              <div id="startSplitProcess-button" class="spaced">
+                <div id="startSplitProcess-Shadow" class="green"></div>
+                <button id="startSplitProcess" class="green">Split Song!</button>
+              </div>
+              <div id="footer">
+                <div id="footer-text">
+                  <p>SongPlits is a web application that allows you to split songs instruments apart using <a href="https://github.com/deezer/spleeter">Deezer's Spleeter</a> technology.</p>
+                  <p>SongPlits is developed by <a href="https://github.com/PromisePending/">PromisePending</a>.</p>
                 </div>
             </div>
-            <div id="uploadFilePopup" class="blocks popup big hide">
-                <div class="content">
-                    <div id="fileInput" class="box">
-                        <h1>Drop the files here</h1>
-                        <h2>Or select from your computer</h2>
-                        <label id='fileInputLabel' for="fileInputElement" class="big spaced green">
-                            <span>Select File</span>
-                            <input type="file" id="fileInputElement"/>
-                        </label>
-                    </div>
-                    <div id="FileSelection" class="forceHide">
-                        <div id="FileSelection-SelectedFile">
-                            <div id="FileSelection-SelectedFile-Preview">
-                                <div id="FileSelection-SelectedFile-Preview-Image">
-                                    <img id="FileSelection-SelectedFile-Preview-Image-Image" src=""/>
-                                </div>
-                            </div>
-                            <div id="FileSelection-SelectedFile-Info">
-                                <h1 id="FileSelection-SelectedFile-Info-Title"></h1>
-                                <h2 id="FileSelection-SelectedFile-Info-Artist"></h2>
-                            </div>
-                        </div>
-                        <div id="FileSelection-Buttons">
-                            <button id="FileSelection-Buttons-GoBack">Change File</button>
-                            <button id="FileSelection-Buttons-SplitSong" class="green">Split Song</button>
-                        </div>
-                    </div>
-                    <div id="serverConnection-screen" class="forceHide">
-                        <div id="serverConnection-screen-content">
-                            <h1 id="serverConnection-screen-content-title">Connecting to Server</h1>
-                            <div id="serverConnection-screen-content-progress">
-                                <canvas id="serverConnection-screen-content-canvas"></canvas>
-                                <h2 id="serverConnection-screen-content-progress-text">Loading...</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
-    </body>
+      </div>
+      <div id="uploadFilePopup" class="blocks popup big hide">
+        <div class="content">
+          <div id="fileInput" class="box">
+            <h1>Drop the files here</h1>
+            <h2>Or select from your computer</h2>
+            <label id='fileInputLabel' for="fileInputElement" class="green">
+              <span>Select File</span>
+              <input type="file" id="fileInputElement"/>
+            </label>
+          </div>
+          <div id="FileSelection" class="forceHide">
+            <div id="FileSelection-SelectedFile">
+              <div id="FileSelection-SelectedFile-Preview">
+                <div id="FileSelection-SelectedFile-Preview-Image">
+                  <img id="FileSelection-SelectedFile-Preview-Image-Image" src=""/>
+                </div>
+              </div>
+              <div id="FileSelection-SelectedFile-Info">
+                <h1 id="FileSelection-SelectedFile-Info-Title"></h1>
+                <h2 id="FileSelection-SelectedFile-Info-Artist"></h2>
+              </div>
+            </div>
+            <div id="FileSelection-Buttons">
+              <button id="FileSelection-Buttons-GoBack">Change File</button>
+              <button id="FileSelection-Buttons-SplitSong" class="green">Split Song</button>
+            </div>
+          </div>
+          <div id="serverConnection-screen" class="forceHide">
+            <div id="serverConnection-screen-content">
+              <h1 id="serverConnection-screen-content-title">Connecting to Server</h1>
+              <div id="serverConnection-screen-content-progress">
+                <canvas id="serverConnection-screen-content-canvas"></canvas>
+                <h2 id="serverConnection-screen-content-progress-text">Loading...</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="errorPopup" class="blocks popup red hide">
+        <div class="content">
+          <div id="errorPopup-content">
+            <div id="errorPopup-effect">
+              <h1 id="errorPopup-content-title">Error</h1>
+            </div>
+            <h2 id="errorPopup-content-text">Hey I'm an error message!</h2>
+            <button id="errorPopup-content-button" class="red">ok</button>
+          </div>
+        </div>
+      </div>
+      <div id="areYouSurePopup" class="blocks popup blue hide">
+        <div class="content">
+          <div id="areYouSurePopup-content">
+            <div id="areYouSurePopup-effect">
+              <h1 id="areYouSurePopup-content-title">Are you sure?</h1>
+            </div>
+            <h2 id="areYouSurePopup-content-text">This will cancel the current splitting. Do you want to proceed?</h2>
+            <div id="areYouSurePopup-content-button">
+              <button id="areYouSurePopup-content-button-continue" class='green'>Continue Split</button>
+              <button id="areYouSurePopup-content-button-abort" class='red'>Abort Split</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

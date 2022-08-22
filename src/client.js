@@ -35,10 +35,6 @@ class Client {
    * @returns {void}
    */
   init() {
-    // Starts the webapp.
-    this.app.listen(this.port, () => {
-      console.log(`Server listening on port ${this.port}`);
-    });
   }
 }
 
