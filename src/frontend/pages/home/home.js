@@ -7,61 +7,35 @@ const spinningWheel = drawSpinningWheel();
 
 const serverConnection = new ServerConnection('ws:localhost:8080/backend/ws');
 
+const popupHandler = new PopupHandler({
+  waveManager: waveManager,
+});
+
+popupHandler.switchFileInputToState('fileUpload');
+
 document.getElementById('startSplitProcess').onclick = () => {
-    showFileInput();
+  popupHandler.switchFileInputToState('fileUpload');
+  popupHandler.showPopup('uploadFilePopup');
 }
 
 document.getElementById('fileInput').onclick = () => {
-    document.getElementById('fileInputElement').click();
+  document.getElementById('fileInputElement').click();
 }
 
 [...document.getElementsByClassName('popup')].forEach((popup) => {
   popup.onclick = (e) => {
     if (e.target.classList.contains('popup')) {
-      popup.classList.add('hide');
-      closeFileInput();
+      popupHandler.closePopup(e.target.id);
     }
   }
 });
 
 // detect the esc key and close the popup
 document.addEventListener('keydown', (e) => {
-    if (e.keyCode === 27) {
-        [...document.getElementsByClassName('popup')].forEach((popup) => {
-            popup.classList.add('hide');
-            closeFileInput();
-        });
-    }
+  if (e.keyCode === 27) {
+    popupHandler.closePopup(popupHandler.openedPopups[popupHandler.openedPopups.length - 1]);
+  }
 });
-
-function showFileInput() {
-    document.getElementById('uploadFilePopup').classList.remove('hide');
-    document.getElementById('uploadFilePopup').classList.remove('disabled');
-    document.getElementById('fileInput').classList.remove('disabled');
-    document.getElementById('fileInput').style.scale = '1';
-    document.getElementById('fileInput').style.position = 'static';
-    document.getElementById('FileSelection').classList.add('forceHide');
-    document.getElementById('FileSelection').classList.add('disabled');
-    document.getElementById('serverConnection-screen').classList.add('forceHide');
-    document.getElementById('serverConnection-screen').classList.add('disabled');
-    waveManager.stopAnimating();
-}
-
-function switchToFileReview() {
-    document.getElementById('fileInput').style.scale = '0';
-    document.getElementById('fileInput').style.position = 'fixed';
-    setTimeout(() => {
-        document.getElementById('fileInput').classList.add('disabled');
-    }, 500);
-    document.getElementById('FileSelection').classList.remove('forceHide');
-    document.getElementById('FileSelection').classList.remove('disabled');
-}
-
-function closeFileInput() {
-    document.getElementById('fileInput').style.scale = '0';
-    document.getElementById('fileInput').classList.remove('disabled');
-    waveManager.startAnimating();
-}
 
 function handleFileSelectElement(ev) {
   ev.preventDefault();
@@ -107,9 +81,10 @@ document.getElementById('uploadFilePopup').ondragend = cancelDefaultDrops;
 document.getElementById('uploadFilePopup').ondrag = cancelDefaultDrops;
 
 function handleFileSelect(file) {
+  document.getElementById('fileInput').classList.remove('dragging');
   if (!file.type.startsWith('audio')) return;
   
-  switchToFileReview();
+  popupHandler.switchFileInputToState('fileSelection');
 
   var JSMediaTags = window.jsmediatags;
   JSMediaTags.read(file, {
@@ -144,7 +119,7 @@ function handleFileSelect(file) {
 }
 
 document.getElementById('FileSelection-Buttons-GoBack').onclick = () => {
-  showFileInput();
+  popupHandler.switchFileInputToState('fileUpload');
 }
 
 document.getElementById('fileInputElement').addEventListener('change', (e) => {
@@ -246,13 +221,8 @@ function transitionRootGradient(property, newValue, fps, time) {
 }
 
 function switchFromFileReviewToFileUpload() {
-  document.getElementById('FileSelection').classList.add('forceHide');
-  setTimeout(() => {
-    document.getElementById('FileSelection').classList.add('disabled');
-    document.getElementById('serverConnection-screen').classList.remove('forceHide');
-    serverConnection.start();
-  }, 500);
-  document.getElementById('serverConnection-screen').classList.remove('disabled');
+  popupHandler.switchFileInputToState('serverConnection');
+  serverConnection.start();
   spinningWheel.startAnimating();
 
   document.documentElement.style.setProperty('--orange-gradient-background-color-1', '#ff6f36c6');
@@ -304,17 +274,6 @@ serverConnection.addEventListener('serverConnectionClose', () => {
 
 function closeUploadPopup() {
   closeFileInput();
-  [...document.getElementsByClassName('popup')].forEach(x => x.classList.add('hide'));
+  [...document.getElementsByClassName('popup')].forEach(x => x.classList.add('forceHide'));
   serverConnection.stop();
 }
-
-function displayErrorPopup(message) {
-  // close all popups open
-  closeUploadPopup();
-  document.getElementById('errorPopup').classList.remove('hide');
-  document.getElementById('errorPopup-content-text').innerText = message;
-}
-
-document.getElementById('errorPopup-content-button').addEventListener('click', () => {
-  document.getElementById('errorPopup').classList.add('hide');
-});

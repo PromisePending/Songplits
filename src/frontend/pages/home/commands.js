@@ -10,7 +10,7 @@ function uploadFile(data) {
   const fileExtension = data.fileToSplit.name.split('.').pop();
 
   const xhr = new XMLHttpRequest();
-  new Promise((resolve) => {
+  return new Promise((resolve) => {
     transitionRootGradient('--orange-gradient-background-color-2', '#a4aeFF3d', 60, 2000);
     data.progressTitle.innerText = 'Uploading file';
     data.spinningWheel.setMode('progress');

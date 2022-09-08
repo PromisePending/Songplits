@@ -103,6 +103,13 @@ html, body {
   transition: all 0.3s ease-out;
   opacity: 1;
   pointer-events: all;
+  animation: backgroundColorChange 1s ease;
+}
+
+@keyframes backgroundColorChange {
+  0% {
+    background-color: transparent;
+  }
 }
 
 .blocks.popup .content {
@@ -121,22 +128,14 @@ html, body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: min(700px, 100vw);
-  min-height: min(700px, 100vh);
+  min-width: min(300px, 100vw);
+  min-height: min(300px, 100vh);
+  animation: appearFromBottom 1s cubic-bezier(.91,1.05,.42,1.04);
 }
 
 .blocks.popup.big .content {
   width: 75%;
   height: 75%;
-}
-
-.blocks.popup.hide {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.blocks.popup.hide .content {
-  margin-top: 200%;
 }
 
 #LandingScreen {
@@ -311,10 +310,31 @@ span.gradientSubTitle {
   margin: 0;
 }
 
-.forceHide {
-  margin-top: 500% !important;
-  height: 0 !important;
-  position: fixed !important;
+@keyframes forceHideOpacity {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes forceHideAnimation {
+  0% {
+    margin-top: 0%;
+  }
+  100% {
+    margin-top: 200%;
+  }
+}
+
+.popup.forceHide {
+  pointer-events: none;
+  animation: forceHideOpacity 0.2s ease-out forwards 0.3s;
+}
+
+.popup.forceHide .content {
+  animation: forceHideAnimation 0.5s cubic-bezier(.33,-0.28,.99,.56) forwards;
 }
 
 .disabled {
@@ -517,12 +537,18 @@ span.gradientSubTitle {
   }
 }
 
+@keyframes appearFromBottom {
+  0% {
+    margin-top: 200%;
+  }
+}
+
 .blocks.popup.red .content{
   border-color: var(--red-error-border-color);
   padding: 0;
 }
 
-#errorPopup-content {
+.errorPopup-content {
   width: 100%;
   height: 100%;
   display: grid;
@@ -535,7 +561,7 @@ span.gradientSubTitle {
   gap: 0.5rem;
 }
 
-#errorPopup-effect {
+.errorPopup-effect {
   width: 100%;
   height: 100%;
   display: flex;
@@ -548,7 +574,7 @@ span.gradientSubTitle {
   background: linear-gradient(145deg, var(--red-error-topBar-background-color-1) 0%, var(--red-error-topBar-background-color-2) 100%);
 }
 
-#errorPopup-content-title {
+.errorPopup-content-title {
   width: 100%;
   font-size: calc(1.5rem + 1vw);
   margin: 0;
@@ -573,7 +599,7 @@ button.red:active {
   filter: saturate(1.5) !important;
 }
 
-#errorPopup-content-button {
+.errorPopup-content-button {
   justify-self: center;
   align-self: center;
   border-radius: calc(var(--border-radius-amount) * 1rem);
@@ -584,7 +610,7 @@ button.red:active {
   margin-bottom: 0.5rem;
 }
 
-#errorPopup-content-text {
+.errorPopup-content-text {
   width: 100%;
   font-size: calc(1.5rem + 0.3vw);
   margin: 0;
@@ -656,7 +682,7 @@ button.red:active {
   background-size: 200% 100%;
   background-position-x: 0%;
   font-size: min(calc(1.5rem + 1vw), 2rem);
-  color: var(--main-text-color);
+  color: var(--main-text-color);  
   cursor: pointer;
 }
 

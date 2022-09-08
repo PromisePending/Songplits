@@ -13,36 +13,37 @@
     <script defer src="./commands.js"></script>
     <script defer src="./waves.js"></script>
     <script defer src="./spinning.js"></script>
+    <script defer src="./popupHandler.js"></script>
     <script defer src="./home.js"></script>
   </head>
   <body>
     <div id="app">
-      <div class="blocks fullscreen">
-        <div id="LandingScreen">
-          <div id="LandingScreen-Background">
-            <div id="LS-BSolid"></div>
-            <canvas id="LS-BWave1"></canvas>
-            <canvas id="LS-BWave2"></canvas>
-            <div id="LS-BOverlay"></div>
-          </div>
-          <div id="LandingScreen-Front">
-            <div class="pageArea">
-              <h1 id="siteTitle">Song<span class="gradientText">Plits</span></h1>
-              <h3 id="subSitetitle">Separate your <span class="gradientSubTitle">favorite songs</span> with a single click</h3>
-              <div id="startSplitProcess-button" class="spaced">
-                <div id="startSplitProcess-Shadow" class="green"></div>
-                <button id="startSplitProcess" class="green">Split Song!</button>
+      <div id="appBlocks" class="blocks fullscreen">
+      <div id="LandingScreen">
+        <div id="LandingScreen-Background">
+          <div id="LS-BSolid"></div>
+          <canvas id="LS-BWave1"></canvas>
+          <canvas id="LS-BWave2"></canvas>
+          <div id="LS-BOverlay"></div>
+        </div>
+        <div id="LandingScreen-Front">
+          <div class="pageArea">
+            <h1 id="siteTitle">Song<span class="gradientText">Plits</span></h1>
+            <h3 id="subSitetitle">Separate your <span class="gradientSubTitle">favorite songs</span> with a single click</h3>
+            <div id="startSplitProcess-button" class="spaced">
+              <div id="startSplitProcess-Shadow" class="green"></div>
+              <button id="startSplitProcess" class="green">Split Song!</button>
+            </div>
+            <div id="footer">
+              <div id="footer-text">
+                <p>SongPlits is a web application that allows you to split songs instruments apart using <a href="https://github.com/deezer/spleeter">Deezer's Spleeter(</a> technology.</p>
+                <p>SongPlits is developed by <a href="https://github.com/PromisePending/">PromisePending</a>.</p>
               </div>
-              <div id="footer">
-                <div id="footer-text">
-                  <p>SongPlits is a web application that allows you to split songs instruments apart using <a href="https://github.com/deezer/spleeter">Deezer's Spleeter</a> technology.</p>
-                  <p>SongPlits is developed by <a href="https://github.com/PromisePending/">PromisePending</a>.</p>
-                </div>
             </div>
           </div>
         </div>
       </div>
-      <div id="uploadFilePopup" class="blocks popup big hide">
+      <div id="uploadFilePopup" class="blocks popup big forceHide disabled">
         <div class="content">
           <div id="fileInput" class="box">
             <h1>Drop the files here</h1>
@@ -80,18 +81,7 @@
           </div>
         </div>
       </div>
-      <div id="errorPopup" class="blocks popup red hide">
-        <div class="content">
-          <div id="errorPopup-content">
-            <div id="errorPopup-effect">
-              <h1 id="errorPopup-content-title">Error</h1>
-            </div>
-            <h2 id="errorPopup-content-text">Hey I'm an error message!</h2>
-            <button id="errorPopup-content-button" class="red">ok</button>
-          </div>
-        </div>
-      </div>
-      <div id="areYouSurePopup" class="blocks popup blue hide">
+      <div id="areYouSurePopup" class="blocks popup blue forceHide disabled">
         <div class="content">
           <div id="areYouSurePopup-content">
             <div id="areYouSurePopup-effect">

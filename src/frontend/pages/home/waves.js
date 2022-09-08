@@ -89,5 +89,6 @@ function generateLandingPageBGWaves() {
         stopAnimating,
         startAnimating,
         stopUpdatingSize,
+        isAnimating,
     };
 }
