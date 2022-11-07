@@ -2,6 +2,7 @@ class PopupHandler {
   constructor(page) {
     this.page = page;
     this.openedPopups = [];
+    this.askBeforeClosePopups = [];
 
     this.waveManager = this.page.waveManager;
   }
@@ -13,8 +14,27 @@ class PopupHandler {
     this.openedPopups.length > 0 ? this.waveManager.stopAnimating() : this.waveManager.startAnimating();
   }
 
-  closePopup(id, callback) {
+  closePopup(id, callback, question, bTexts, force) {
     if (this.openedPopups.indexOf(id) === -1) return;
+    if (typeof bTexts === 'boolean') {
+      force = bTexts;
+      bTexts = ['yes', 'no'];
+    }
+    if (this.askBeforeClosePopups.includes(id) && !force) {
+      this.createQuestionPopup(question ?? 'Are you sure you want to close this popup?', 2, bTexts ? bTexts[0] : 'yes', () => {
+        this.closePopupWindow(id, callback);
+      }, bTexts ? bTexts[1] : 'no', () => {});
+    } else {
+      this.closePopupWindow(id, callback);
+    }
+  }
+
+  /**
+   * @private
+   * @param {string} id 
+   * @param {Function} callback 
+   */
+  closePopupWindow(id, callback) {
     document.getElementById(id).classList.add('forceHide');
     setTimeout(() => {
       document.getElementById(id).classList.add('disabled');
@@ -123,5 +143,12 @@ class PopupHandler {
         errorPopup.remove();
       });
     });
+  }
+
+  ///////////////////////////
+  // QuestionPopup
+
+  createQuestionPopup(question, amountOfButtons, buttonsSettings) {
+    
   }
 }

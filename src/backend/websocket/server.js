@@ -33,7 +33,7 @@ class WSServer extends EventEmitter {
         this.server.on('connection', (data) => {this.onConnection(data);});
         this.server.on('close', () => {this.onClose();});
         this.server.on('error', (err) => {this.onError(err);});
-        console.log('Websocket Server started!');
+        console.log('Websocket Server started! on ws://localhost:8080' + this.url);
     }
 
     onConnection(data) {

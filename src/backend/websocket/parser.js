@@ -2,12 +2,14 @@
  * @param {string} data
  */
 function parseClientCommand(data) {
-    const commandId = Number(data.slice(1, 4));
+    const messageObject = JSON.parse(data);
+    const commandId = Number(messageObject.type);
+    const command = messageObject.cmd;
 
     return {
         valid: !isNaN(commandId),
         commandId: commandId,
-        commandArgs: data.slice(4)
+        commandArgs: command
     };
 }
 

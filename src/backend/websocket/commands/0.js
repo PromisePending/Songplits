@@ -3,8 +3,10 @@ function commandZero (server, client, messageObject) {
   // the server will create an identifier for the file and return it to the client so that the client can upload the file to the right endpoint
   const fileIdentifier = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
   const message = {
-    type: '0',
-    fileIdentifier: fileIdentifier,
+    type: '000',
+    cmd: {
+      fileIdentifier: fileIdentifier,
+    }
   };
   client.send(JSON.stringify(message));
 
@@ -18,6 +20,9 @@ function commandZero (server, client, messageObject) {
     fileIdentifier: fileIdentifier,
     client: client,
     timeout: timeout,
+    filePath: null,
+    folderPath: null,
+    fileExtension: null,
   });
 }
 

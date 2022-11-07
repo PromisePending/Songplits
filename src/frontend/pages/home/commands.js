@@ -1,12 +1,11 @@
 const commandsList = {
-  '0': uploadFile,
-  '1': stateChange1,
+  '000': uploadFile,
+  '001': stateChange1,
 }
 
 function uploadFile(data) {
   if (!data.fileToSplit) return displayErrorPopup('No file selected! Are you messing with the websocket server?');
-
-  const fileIdentifier = data.cmd.fileIdentifier;
+  const fileIdentifier = data.cmd.cmd.fileIdentifier;
   const fileExtension = data.fileToSplit.name.split('.').pop();
 
   const xhr = new XMLHttpRequest();
@@ -51,5 +50,22 @@ function uploadFile(data) {
 }
 
 function stateChange1(data) {
-
+  return new Promise((resolve) => {
+    transitionRootGradient('--orange-gradient-background-color-2', '#f542ef3d', 60, 2000);
+    data.progressTitle.innerText = 'Splitting file';
+    data.spinningWheel.setMode('progress');
+    data.progressText.innerText = '0%';
+    data.spinningWheel.setProgress(0);
+    transitionHexColors('spinningWheel', (color) => {
+      spinningWheel.parameters.color = color;
+    }, spinningWheel.parameters.color, '#def8ff', 60, 2000);
+    // sends a message to the websocket server to start splitting the file
+    serverConnection.send(JSON.stringify({
+      type: '001',
+      cmd: {
+        fileIdentifier: data.cmd.cmd.fileIdentifier,
+      },
+    }));
+    resolve(true);
+  });
 }

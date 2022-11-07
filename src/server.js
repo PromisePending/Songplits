@@ -10,14 +10,10 @@ class Server {
     this.WSServer = new WSServer(this, this.url);
     this.processFilesBuffer = [];
     // cleans the cache folder
-    fs.readdir(path.join(__dirname, './backend/cache'), (err, files) => {
-      if (err) throw err;
-      for (const file of files) {
-        fs.unlink(path.join(__dirname, './backend/cache', file), err => {
-          if (err) throw err;
-        });
-      }
-    });
+    if (fs.existsSync(path.join(__dirname, './backend/cache'))) {
+      fs.rmSync(path.join(__dirname, './backend/cache'), { recursive: true });
+    }
+    fs.mkdirSync(path.join(__dirname, './backend/cache'));
     console.log('Backend Server created!');
   }
 

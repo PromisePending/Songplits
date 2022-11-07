@@ -16,6 +16,7 @@ popupHandler.switchFileInputToState('fileUpload');
 document.getElementById('startSplitProcess').onclick = () => {
   popupHandler.switchFileInputToState('fileUpload');
   popupHandler.showPopup('uploadFilePopup');
+  popupHandler.askBeforeClosePopups = popupHandler.askBeforeClosePopups.filter(x => x !== 'uploadFilePopup');
 }
 
 document.getElementById('fileInput').onclick = () => {
@@ -221,6 +222,7 @@ function transitionRootGradient(property, newValue, fps, time) {
 }
 
 function switchFromFileReviewToFileUpload() {
+  popupHandler.askBeforeClosePopups.push('uploadFilePopup');
   popupHandler.switchFileInputToState('serverConnection');
   serverConnection.start();
   spinningWheel.startAnimating();
@@ -245,7 +247,10 @@ serverConnection.addEventListener('serverConnectionOpen', () => {
   document.getElementById('serverConnection-screen-content-title').innerText = 'Preparing for upload';
   document.getElementById('serverConnection-screen-content-progress-text').innerText = 'Loading...';
   
-  serverConnection.send('>000'); // sends a initial message to the server to get the server's to start connection
+  serverConnection.send(JSON.stringify({
+    type: '000',
+    cmd: {},
+  }));
 });
 
 serverConnection.addEventListener('serverConnectionMessage', (data) => {

@@ -27,7 +27,7 @@ class ServerConnection extends EventTarget {
       this.dispatchEvent(new CustomEvent('serverConnectionClose'));
       this.reconnectTimeout = setTimeout(() => {
         this.reconnect();
-      }, Math.pow(2, this.reconnectAttempts) * 1000);
+      }, 1000);
     }
     this.server.onerror = (event) => {
       this.dispatchEvent(new CustomEvent('serverConnectionError', { detail: event.data }));

@@ -5,11 +5,17 @@ module.exports = function(server, req, res, method) {
   if (method !== 'POST') return res.status(405).send('only POST requests are allowed');
   if (!req.query.id) return res.status(400).send('missing id');
   if (!req.query.ext) return res.status(400).send('missing file extension');
-  if (!server.backend.processFilesBuffer.find(file => file.fileIdentifier === req.query.id)) return res.status(400).send('Invalid id! Are you trying to upload a file that is already uploaded? Or you didn\'t created the file yet on the websocket server?');
+  const backendProcess = server.backend.processFilesBuffer.find(file => file.fileIdentifier === req.query.id);
+  if (!backendProcess) return res.status(400).send('Invalid id! Are you trying to upload a file that is already uploaded? Or you didn\'t created the file yet on the websocket server?');
 
-  clearTimeout(server.backend.processFilesBuffer.find(file => file.fileIdentifier === req.query.id).timeout);
+  clearTimeout(backendProcess.timeout);
 
-  var audioFile = fs.createWriteStream(path.resolve(__dirname, '..', '..', 'cache', req.query.id + '.' + req.query.ext.split('.').pop()));
+  fs.mkdirSync(path.join(__dirname, '../../../backend/cache/' + req.query.id));
+  var audioFile = fs.createWriteStream(path.resolve(__dirname, '..', '..', 'cache', req.query.id, req.query.id + '.' + req.query.ext.split('.').pop()));
+
+  backendProcess.filePath = path.resolve(__dirname, '..', '..', 'cache', req.query.id, req.query.id + '.' + req.query.ext.split('.').pop());
+  backendProcess.folderPath = path.resolve(__dirname, '..', '..', 'cache', req.query.id);
+  backendProcess.fileExtension = req.query.ext.split('.').pop();
 
   audioFile.on('open', function (fd) {
     var fileFinished = false;
@@ -26,11 +32,13 @@ module.exports = function(server, req, res, method) {
     req.on('end', function(){
       fileFinished = true;
       audioFile.end();
-      res.status(200).send('File uploaded!');
-      server.backend.processFilesBuffer.find(file => file.fileIdentifier === req.query.id).client.send(JSON.stringify({
-        type: '1',
-
+      backendProcess.client.send(JSON.stringify({
+        type: '001',
+        cmd: {
+          fileIdentifier: req.query.id,
+        }
       }));
+      res.status(200).send('File uploaded!');
     });
   });
 }
